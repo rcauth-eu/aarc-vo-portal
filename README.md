@@ -1,8 +1,8 @@
 # aarc-vo-portal
 
-**NOTE** *This is software is just a proof of concept portal implementation, and it's in no way meant to be used as a production ready component!*
+**NOTE** *This is software is a proof of concept portal implementation, use in a production environment might not be a good idea!*
 
-##VO Portal 
+## VO Portal
 
 The VO Portal is a modified version of the
 [OA4MP Client](http://grid.ncsa.illinois.edu/myproxy/oauth/client/index.xhtml).
