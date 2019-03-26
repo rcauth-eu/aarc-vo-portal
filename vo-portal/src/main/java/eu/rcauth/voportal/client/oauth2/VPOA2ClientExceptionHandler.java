@@ -1,4 +1,4 @@
-package org.voportal.client.oauth2;
+package eu.rcauth.voportal.client.oauth2;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;

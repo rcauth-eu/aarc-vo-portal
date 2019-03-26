@@ -3,8 +3,8 @@ package test;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 
-import org.voportal.voms.VPBufferedMessageLogger;
-import org.voportal.voms.VPVomsProxyInfo;
+import eu.rcauth.voportal.voms.VPBufferedMessageLogger;
+import eu.rcauth.voportal.voms.VPVomsProxyInfo;
 
 public class ProxyVomsInfoCLITester {
 

@@ -9,10 +9,10 @@
     <!--what gets put in the browser's title bar -->
 
 
-	<!-- Simple VO Choosing servlet -->
+    <!-- Simple VO Choosing servlet -->
     <servlet>
         <servlet-name>VOChooser</servlet-name>
-        <servlet-class>org.voportal.servlet.VOChoosingServlet</servlet-class>
+        <servlet-class>eu.rcauth.voportal.servlet.VOChoosingServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
 
@@ -25,7 +25,7 @@
         <servlet-name>startRequest</servlet-name>
         <!--internal name of the servlet-->
         <!-- <servlet-class>edu.uiuc.ncsa.oa4mp.oauth2.client.servlet.OA2StartRequest</servlet-class> -->
-        <servlet-class>org.voportal.client.oauth2.servlet.VPOA2StartRequest</servlet-class>
+        <servlet-class>eu.rcauth.voportal.client.oauth2.servlet.VPOA2StartRequest</servlet-class>
         <load-on-startup>1</load-on-startup>
         <!--load as soon as tomcat starts?-->
     </servlet>
@@ -42,7 +42,7 @@
         <servlet-name>ready</servlet-name>
         <!--internal name of the servlet-->
         <!-- <servlet-class>edu.uiuc.ncsa.oa4mp.oauth2.client.servlet.OA2ReadyServlet</servlet-class> -->
-        <servlet-class>org.voportal.client.oauth2.servlet.VPOA2ReadyServlet</servlet-class>
+        <servlet-class>eu.rcauth.voportal.client.oauth2.servlet.VPOA2ReadyServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
         <!--load as soon as tomcat starts?-->
     </servlet>
@@ -64,7 +64,7 @@
     -->
     
     <listener>
-        <listener-class>org.voportal.client.oauth2.VPOA2ClientBootstrapper</listener-class>
+        <listener-class>eu.rcauth.voportal.client.oauth2.VPOA2ClientBootstrapper</listener-class>
     </listener>
 
     <!--
@@ -83,8 +83,8 @@
             <transport-guarantee>CONFIDENTIAL</transport-guarantee>
         </user-data-constraint>
     </security-constraint>
-	-->
-	
+    -->
+
     <filter>
         <filter-name>filter</filter-name>
         <filter-class>edu.uiuc.ncsa.security.servlet.MyTomcatFilter</filter-class>
@@ -93,7 +93,7 @@
         <filter-name>filter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
-	
+
 
 
     <!--
@@ -114,7 +114,7 @@
    
     <!-- Configure the location of vomsdir on the local filesystem -->
     <context-param>
-        <param-name>org.voportal.vomsdir</param-name>
+        <param-name>eu.rcauth.voportal.vomsdir</param-name>
         <param-value>/etc/grid-security/vomsdir</param-value>
     </context-param>
        

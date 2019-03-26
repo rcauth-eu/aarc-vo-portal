@@ -1,4 +1,4 @@
-package org.voportal.client.oauth2.servlet;
+package eu.rcauth.voportal.client.oauth2.servlet;
 
 import edu.uiuc.ncsa.myproxy.oa4mp.client.AssetResponse;
 import edu.uiuc.ncsa.myproxy.oa4mp.client.ClientEnvironment;
@@ -19,17 +19,17 @@ import edu.uiuc.ncsa.security.servlet.JSPUtil;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.voportal.voms.VPVomsProxyInfo;
+import eu.rcauth.voportal.voms.VPVomsProxyInfo;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.net.URI;
 
 public class VPOA2ReadyServlet extends ClientServlet {
-	
-	protected static String PROXY_TMP_DIR = "/tmp";
-	public static String VOMS_INFO_PAGE = "/pages/vomsinfo.jsp";
-	
+
+    protected static String PROXY_TMP_DIR = "/tmp";
+    public static String VOMS_INFO_PAGE = "/pages/vomsinfo.jsp";
+
     @Override
     protected void doIt(HttpServletRequest request, HttpServletResponse response) throws Throwable {
         if (request.getParameterMap().containsKey(OA2Constants.ERROR)) {
@@ -44,8 +44,9 @@ public class VPOA2ReadyServlet extends ClientServlet {
         info("2.a. Getting token and verifier.");
         String token = request.getParameter(CONST(ClientEnvironment.TOKEN));
         String state = request.getParameter(OA2Constants.STATE);
+        // TODO MISCHA: test vs. warn() message?!
         if (token == null) {
-            warn("2.a. The token is " + (token == null ? "null" : token) + ".");
+            warn("2.a. The token is null.");
             GeneralException ge = new GeneralException("Error: This servlet requires parameters for the token and possibly verifier.");
             request.setAttribute("exception", ge);
             JSPUtil.fwd(request, response, getCE().getErrorPagePath());
@@ -69,7 +70,7 @@ public class VPOA2ReadyServlet extends ClientServlet {
         UserInfo ui = null;
         if (identifier == null) {
             
-        	debug("No cookie found! Cannot identify session!");
+            debug("No cookie found! Cannot identify session!");
             throw new GeneralException("Unable to identify session!");
             
         } else {
@@ -87,41 +88,40 @@ public class VPOA2ReadyServlet extends ClientServlet {
 
         String username = ui.getSub().replaceAll("/", "X");
         String tmpProxy = PROXY_TMP_DIR + "/" + username + ".proxy";
-		String proxyString = null;
-		
-		if ( assetResponse.getCredential() instanceof MyX509Proxy ) {
-			proxyString = ((MyX509Proxy)assetResponse.getCredential()).getX509ProxyPEM();
-		} else {
-			proxyString = assetResponse.getCredential().getX509CertificatesPEM();
-		}
-		
-        String vomsinfo = null;
-		
-		try {
-			FileOutputStream fOut = new FileOutputStream(new File(tmpProxy));
-			fOut.write( proxyString.getBytes() );
-			fOut.close();
-			
-			vomsinfo = VPVomsProxyInfo.exec(tmpProxy);
-		}
-		catch (Exception e) {
-			throw new GeneralException("Unable to execute voms-proxy-info on the returned chain!",e);
-		}        
-        
-		request.setAttribute("vomsinfo", vomsinfo);
-		request.setAttribute("proxy", proxyString);
+        String proxyString = null;
 
-		// Fix in cases where the server request passes through Apache before going to Tomcat.
+        if ( assetResponse.getCredential() instanceof MyX509Proxy ) {
+            proxyString = ((MyX509Proxy)assetResponse.getCredential()).getX509ProxyPEM();
+        } else {
+            proxyString = assetResponse.getCredential().getX509CertificatesPEM();
+        }
+
+        String vomsinfo = null;
+
+        try {
+            FileOutputStream fOut = new FileOutputStream(new File(tmpProxy));
+            fOut.write( proxyString.getBytes() );
+            fOut.close();
+
+            vomsinfo = VPVomsProxyInfo.exec(tmpProxy);
+        }
+        catch (Exception e) {
+            throw new GeneralException("Unable to execute voms-proxy-info on the returned chain!",e);
+        }        
+
+        request.setAttribute("vomsinfo", vomsinfo);
+        request.setAttribute("proxy", proxyString);
+
+        // Fix in cases where the server request passes through Apache before going to Tomcat.
 
         String contextPath = request.getContextPath();
         if (!contextPath.endsWith("/")) {
+            // TODO Doesn't work since we don't change the actual parameter
             contextPath = contextPath + "/";
         }
         info("2.a. Completely finished with delegation.");
         JSPUtil.fwd(request, response, VOMS_INFO_PAGE);       
         
-        
-        return;
     }
 
 }

@@ -1,4 +1,4 @@
-package org.voportal.voms;
+package eu.rcauth.voportal.voms;
 
 import java.io.PrintStream;
 

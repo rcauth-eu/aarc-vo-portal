@@ -1,4 +1,4 @@
-package org.voportal.client.oauth2.servlet;
+package eu.rcauth.voportal.client.oauth2.servlet;
 
 import edu.uiuc.ncsa.myproxy.oa4mp.client.OA4MPResponse;
 import edu.uiuc.ncsa.myproxy.oa4mp.client.servlet.ClientServlet;
@@ -7,7 +7,6 @@ import edu.uiuc.ncsa.oa4mp.oauth2.client.OA2Asset;
 import edu.uiuc.ncsa.security.core.Identifier;
 import edu.uiuc.ncsa.security.oauth_2_0.OA2Constants;
 import edu.uiuc.ncsa.security.servlet.JSPUtil;
-import edu.uiuc.ncsa.security.util.pkcs.KeyUtil;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -33,26 +32,26 @@ public class VPOA2StartRequest extends ClientServlet {
         gtwResp = getOA4MPService().requestCert(id);
 
         // save VO parameters so that we can send them in a subsequent /getproxy call
-    	String voname = request.getParameter(OA2Constants.VONAME);
-    	if (voname == null) {
-    		info("1.a.1 No voname, continuing without it");
-    	} else {
-    		info("1.a.1 voname received : " + voname);
-    		OA2Asset asset = (OA2Asset) getCE().getAssetStore().get(id);
-    		asset.setVoname(voname);
-    		getCE().getAssetStore().save(asset);
-    	}          
-    	String vomses = request.getParameter(OA2Constants.VOMSES);
-    	if (vomses == null) {
-    		info("1.a.1 No vomses, continuing without it");
-    	} else {
-    		info("1.a.1 vomses received : " + vomses);
-    		OA2Asset asset = (OA2Asset) getCE().getAssetStore().get(id);
-    		asset.setVomses(vomses);
-    		getCE().getAssetStore().save(asset);
-    	}          
-    	
-    	
+        String voname = request.getParameter(OA2Constants.VONAME);
+        if (voname == null) {
+            info("1.a.1 No voname, continuing without it");
+        } else {
+            info("1.a.1 voname received : " + voname);
+            OA2Asset asset = (OA2Asset) getCE().getAssetStore().get(id);
+            asset.setVoname(voname);
+            getCE().getAssetStore().save(asset);
+        }
+        String vomses = request.getParameter(OA2Constants.VOMSES);
+        if (vomses == null) {
+            info("1.a.1 No vomses, continuing without it");
+        } else {
+            info("1.a.1 vomses received : " + vomses);
+            OA2Asset asset = (OA2Asset) getCE().getAssetStore().get(id);
+            asset.setVomses(vomses);
+            getCE().getAssetStore().save(asset);
+        }
+
+
         // if there is a store, store something in it.
         Cookie cookie = new Cookie(OA4MP_CLIENT_REQUEST_ID, id.getUri().toString());
         cookie.setMaxAge(15 * 60); // 15 minutes

@@ -1,70 +1,152 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>nikhef.oa4mp.oauth2</groupId>
-  <artifactId>vo-portal</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <packaging>war</packaging>
-    
-  <name>VO Portal</name>
- 
-  <dependencies>
-   <dependency>
-         <groupId>org.italiangrid</groupId>
-         <artifactId>voms-clients</artifactId>
-         <version>3.0.6</version>
-    </dependency>
-    <dependency>
-         <groupId>org.italiangrid</groupId>
-         <artifactId>voms-api-java</artifactId>
-         <version>3.1.0.rc0</version>
-    </dependency>  
-    <dependency>
-         <groupId>javax.servlet</groupId>
-         <artifactId>servlet-api</artifactId>
-         <version>2.5</version>
-         <scope>provided</scope>
-     </dependency>
-	 <dependency>
-    	 <groupId>javax.servlet</groupId>
-    	 <artifactId>jstl</artifactId>
-    	 <version>1.2</version>
-	 </dependency>   
-	 
-	 
-	 <dependency>
-         <groupId>edu.uiuc.ncsa.myproxy</groupId>
-         <artifactId>oa4mp-client-oauth2</artifactId>
-         <version>3.4-SNAPSHOT</version>
-         <type>war</type>
-         <scope>runtime</scope>
-     </dependency>
-     <dependency>
-         <groupId>edu.uiuc.ncsa.myproxy</groupId>
-         <artifactId>oa4mp-client-loader-oauth2</artifactId>
-         <version>3.4-SNAPSHOT</version>
-     </dependency>	 
-     <dependency>
-         <groupId>edu.uiuc.ncsa.myproxy</groupId>
-         <artifactId>oa4mp-client-api</artifactId>
-         <version>3.4-SNAPSHOT</version>
-     </dependency>  
-     
-  </dependencies>  
-  
-  
-  <build>
-     <plugins>
-         <plugin>
-             <groupId>org.apache.maven.plugins</groupId>
-             <artifactId>maven-compiler-plugin</artifactId>
-             <configuration>
-                 <source>1.8</source>
-                 <target>1.8</target>
-             </configuration>
-             <version>2.5</version>
-         </plugin>
-     </plugins>
-     <finalName>vo-portal</finalName>
-  </build>    
-  
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>eu.rcauth.masterportal</groupId>
+    <artifactId>vo-portal</artifactId>
+    <version>${revision}</version>
+    <name>RCauth VO Portal</name>
+    <packaging>war</packaging>
+    <description>Demo VO portal for MasterPortal</description>
+    <url>https://wiki.nikhef.nl/grid/AARC_Pilot</url>
+
+    <licenses>
+        <license>
+            <name>Apache license</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>Tamas Balogh</name>
+            <email>tamasb@nikhef.nl</email>
+        </developer>
+        <developer>
+            <name>Mischa Sallé</name>
+            <email>msalle@nikhef.nl</email>
+        </developer>
+    </developers>
+
+    <properties>
+        <revision>0.2.0-SNAPSHOT</revision>
+        <oa4mpVersion>4.1.2-RCauth</oa4mpVersion>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>org.italiangrid</groupId>
+            <artifactId>voms-clients</artifactId>
+            <version>3.0.6</version>
+            <!--version>3.3.0</version-->
+        </dependency>
+
+        <dependency>
+            <groupId>org.italiangrid</groupId>
+            <artifactId>voms-api-java</artifactId>
+            <!--version>3.1.0.rc0</version-->
+            <version>3.3.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>edu.uiuc.ncsa.myproxy</groupId>
+            <artifactId>oa4mp-client-oauth2</artifactId>
+            <version>${oa4mpVersion}</version>
+            <type>war</type>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>edu.uiuc.ncsa.myproxy</groupId>
+            <artifactId>oa4mp-client-loader-oauth2</artifactId>
+            <version>${oa4mpVersion}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>edu.uiuc.ncsa.myproxy</groupId>
+            <artifactId>oa4mp-client-api</artifactId>
+            <version>${oa4mpVersion}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.1.0</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+
+        <plugins>
+            <!-- make sure jar file's MANIFEST.MF will contain the version -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.3.2</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                            <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+                <version>3.5.1</version>
+            </plugin>
+
+            <!-- update revision properties -->
+            <plugin>
+              <groupId>org.codehaus.mojo</groupId>
+              <artifactId>flatten-maven-plugin</artifactId>
+              <version>1.1.0</version>
+              <configuration>
+                <!-- also keep name -->
+                <pomElements><name/></pomElements>
+                <updatePomFile>true</updatePomFile>
+              </configuration>
+              <executions>
+                <execution>
+                  <id>flatten</id>
+                  <phase>process-resources</phase>
+                  <goals>
+                    <goal>flatten</goal>
+                  </goals>
+                </execution>
+                <execution>
+                  <id>flatten.clean</id>
+                  <phase>clean</phase>
+                  <goals>
+                    <goal>clean</goal>
+                  </goals>
+                </execution>
+              </executions>
+            </plugin>
+
+        </plugins>
+
+        <finalName>vo-portal</finalName>
+
+    </build>
+
 </project>

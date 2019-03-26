@@ -1,4 +1,4 @@
-package org.voportal.client.oauth2;
+package eu.rcauth.voportal.client.oauth2;
 
 import edu.uiuc.ncsa.myproxy.oa4mp.client.servlet.ClientServlet;
 import edu.uiuc.ncsa.oa4mp.oauth2.client.OA2ClientServletInitializer;
