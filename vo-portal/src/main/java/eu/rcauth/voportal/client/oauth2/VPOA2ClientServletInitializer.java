@@ -6,12 +6,12 @@ import edu.uiuc.ncsa.security.servlet.ExceptionHandler;
 
 public class VPOA2ClientServletInitializer extends OA2ClientServletInitializer {
 
-	@Override
-	public ExceptionHandler getExceptionHandler() {
+    @Override
+    public ExceptionHandler getExceptionHandler() {
         if(exceptionHandler == null){
             exceptionHandler = new VPOA2ClientExceptionHandler((ClientServlet) getServlet(), getEnvironment().getMyLogger());
         }
         return exceptionHandler;
-	}
-	
+    }
+
 }

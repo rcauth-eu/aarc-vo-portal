@@ -11,29 +11,29 @@ function redirect(voms) {
 
     if (voms) {
 
-            var volist = document.getElementById("volist");
-            var vo = volist.options[volist.selectedIndex].text
+        var volist = document.getElementById("volist");
+        var vo = volist.options[volist.selectedIndex].text
 
-            var roles = document.getElementById("roles").value;
-            var fqan;
-            if (roles) {
-                    fqan = vo + ":" + roles;
-            } else {
-                    fqan = vo;
-            }
+        var roles = document.getElementById("roles").value;
+        var fqan;
+        if (roles) {
+                fqan = vo + ":" + roles;
+        } else {
+                fqan = vo;
+        }
 
-            //window.location = host + "?voms_fqan=" + fqan + "&redirect_url=" + redirect_url;
-            window.location = host + "?voname=" + fqan;
+        //window.location = host + "?voms_fqan=" + fqan + "&redirect_url=" + redirect_url;
+        window.location = host + "?voname=" + fqan;
 
     } else {
 
-             window.location = host
+         window.location = host
 
     }
 }
 </script>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>VO Portal</title>
 </head>
 
@@ -50,7 +50,7 @@ Choose your vo from the list, followed by the desired roles and capabilities:
 FAQN :
 <select name="volist" id="volist">
     <c:forEach var="vo" items="${vomses}">
-           <option value="${vo}">${vo}</option>
+        <option value="${vo}">${vo}</option>
     </c:forEach>
 </select>
 :

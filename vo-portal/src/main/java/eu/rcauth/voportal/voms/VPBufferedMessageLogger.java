@@ -6,8 +6,8 @@ import org.italiangrid.voms.clients.util.MessageLogger;
 
 public class VPBufferedMessageLogger extends MessageLogger {
 
-	  public VPBufferedMessageLogger(PrintStream out,PrintStream err) {
-		    super(out, err, DEFAULT, MessageLevel.INFO);
-	  }
+    public VPBufferedMessageLogger(PrintStream out,PrintStream err) {
+        super(out, err, DEFAULT, MessageLevel.INFO);
+    }
 	
 }

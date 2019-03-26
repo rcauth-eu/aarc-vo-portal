@@ -9,7 +9,7 @@
     <!--what gets put in the browser's title bar -->
 
 
-	<!-- Simple VO Choosing servlet -->
+    <!-- Simple VO Choosing servlet -->
     <servlet>
         <servlet-name>VOChooser</servlet-name>
         <servlet-class>org.voportal.servlet.VOChoosingServlet</servlet-class>
@@ -25,7 +25,7 @@
         <servlet-name>VomsInfo</servlet-name>
         <servlet-class>org.voportal.servlet.VomsProxyInfoServlet</servlet-class>
     </servlet>
-    
+
     <servlet-mapping>
         <servlet-name>VomsInfo</servlet-name>
         <url-pattern>/vomsinfo</url-pattern>
@@ -57,6 +57,6 @@
         <param-value>https://vo-portal/vo-portal/ready</param-value>
     </context-param>
     -->
-    
+
 </web-app>
 

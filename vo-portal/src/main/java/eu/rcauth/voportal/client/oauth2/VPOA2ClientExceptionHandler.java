@@ -19,7 +19,7 @@ public class VPOA2ClientExceptionHandler extends OA2ClientExceptionHandler {
         super(clientServlet, myLogger);
         this.logger = myLogger;
     }
-	
+
     @Override
     protected void parseContent(String content, HttpServletRequest request) {
         boolean hasValidContent = false;
@@ -43,5 +43,5 @@ public class VPOA2ClientExceptionHandler extends OA2ClientExceptionHandler {
             throw new GeneralException();
         }
     }
-    
+
 }

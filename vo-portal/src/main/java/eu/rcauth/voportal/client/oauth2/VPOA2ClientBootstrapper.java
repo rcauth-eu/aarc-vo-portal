@@ -11,7 +11,7 @@ import org.apache.commons.configuration.tree.ConfigurationNode;
  *  Bootstraps VO Portal OA4MP Client
  */
 public class VPOA2ClientBootstrapper extends OA2ClientBootstrapper {
-	
+
     public static final String VP_OA2_CONFIG_FILE_KEY = "oa4mp:vp-oa2.client.config.file";
     public static final String VP_OA2_CONFIG_NAME_KEY = "oa4mp:vp-oa2.client.config.name";
 
@@ -29,10 +29,10 @@ public class VPOA2ClientBootstrapper extends OA2ClientBootstrapper {
     public ConfigurationLoader getConfigurationLoader(ConfigurationNode node) throws MyConfigurationException {
         return new VPOA2ClientLoader(node);
     }
-    
+
     @Override
     public Initialization getInitialization() {
-    	return new VPOA2ClientServletInitializer();
+        return new VPOA2ClientServletInitializer();
     }
-    
+
 }
