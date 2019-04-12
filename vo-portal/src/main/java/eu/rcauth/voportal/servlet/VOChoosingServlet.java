@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 public class VOChoosingServlet extends HttpServlet {
 
-    Logger logger = Logger.getLogger(VOChoosingServlet.class.getName());
+    final Logger logger = Logger.getLogger(VOChoosingServlet.class.getName());
 
     public static final String VO_CHOOSER_PAGE="/pages/chooser.jsp";
     public static final String VO_PORTAL_START="/startRequest";

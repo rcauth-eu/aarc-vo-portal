@@ -27,8 +27,8 @@ import java.net.URI;
 
 public class VPOA2ReadyServlet extends ClientServlet {
 
-    protected static String PROXY_TMP_DIR = "/tmp";
-    public static String VOMS_INFO_PAGE = "/pages/vomsinfo.jsp";
+    protected static final String PROXY_TMP_DIR = "/tmp";
+    public static final String VOMS_INFO_PAGE = "/pages/vomsinfo.jsp";
 
     @Override
     protected void doIt(HttpServletRequest request, HttpServletResponse response) throws Throwable {

@@ -115,7 +115,7 @@ public class ProxyVomsInfoTester {
 
         }
         catch (Exception e) {
-            System.out.println(e);
+//            System.out.println(e); // Note: e.printStackTrace() prints the same, plus the stack itself
             e.printStackTrace();
         }
 

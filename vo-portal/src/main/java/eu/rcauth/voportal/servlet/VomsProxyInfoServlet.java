@@ -14,11 +14,11 @@ import eu.rcauth.voportal.voms.VPVomsProxyInfo;
 
 public class VomsProxyInfoServlet extends HttpServlet {
 
-    public static String VOMS_INFO_PAGE = "/pages/vomsinfo.jsp";
+    public static final String VOMS_INFO_PAGE = "/pages/vomsinfo.jsp";
 
-    public static String REQ_USERNAME = "username";
+    public static final String REQ_USERNAME = "username";
     
-    public static String PROXY_DIR = "/tmp";
+    public static final String PROXY_DIR = "/tmp";
     
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
