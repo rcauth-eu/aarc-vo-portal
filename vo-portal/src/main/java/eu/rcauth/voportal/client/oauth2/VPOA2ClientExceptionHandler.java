@@ -27,9 +27,9 @@ public class VPOA2ClientExceptionHandler extends OA2ClientExceptionHandler {
         while (st.hasMoreElements()) {
             String currentLine = st.nextToken();
             StringTokenizer clST = new StringTokenizer(currentLine, "=");
-            if (!clST.hasMoreTokens() || clST.countTokens() != 2) {
+            if (!clST.hasMoreTokens() || clST.countTokens() != 2)
                 continue;
-            }
+
             try {
                 request.setAttribute(clST.nextToken(), URLDecoder.decode(clST.nextToken(), "UTF-8").replaceAll("\n", ""));
             } catch (UnsupportedEncodingException xx) {
@@ -38,6 +38,7 @@ public class VPOA2ClientExceptionHandler extends OA2ClientExceptionHandler {
             }
             hasValidContent = true;
         }
+
         if (!hasValidContent) {
             logger.warn("Body or error was not parseable");
             throw new GeneralException();

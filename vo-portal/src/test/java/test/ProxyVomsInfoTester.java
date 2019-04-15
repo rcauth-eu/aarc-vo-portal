@@ -77,15 +77,14 @@ public class ProxyVomsInfoTester {
 
             System.out.print("key usage  : ");
             for (int i=0 ; i<proxycert.getKeyUsage().length ; i++) {
-                if (proxycert.getKeyUsage()[i]) {
+                if (proxycert.getKeyUsage()[i])
                     System.out.print(getKeyUsageString(i) + " ");
-                }
             }
             System.out.println();
 
             for(VOMSValidationResult r: results){
 
-                if ( r.isValid() ){
+                if ( r.isValid() ) {
                     VOMSAttribute attrs = r.getAttributes();
 
                     System.out.println("=== VO " + attrs.getVO() + " extension information ===");
@@ -100,7 +99,7 @@ public class ProxyVomsInfoTester {
                     System.out.println("timeleft   : " + hours + ":" + minutes + ":" + seconds);
                     System.out.println("uri        : " + attrs.getHost() + ":" + attrs.getPort());
 
-                }else{
+                } else {
 
                     System.out.println("FAILED VALIDATION");
 
@@ -136,16 +135,16 @@ public class ProxyVomsInfoTester {
         //     decipherOnly            (8)
 
         switch(val) {
-        case 0: return "digitalSignature";
-        case 1: return "nonRepudiation";
-        case 2: return "keyEncipherment";
-        case 3: return "dataEncipherment";
-        case 4: return "keyAgreement";
-        case 5: return "keyCertSign";
-        case 6: return "cRLSign";
-        case 7: return "encipherOnly";
-        case 9: return "decipherOnly";
-        default: return null;
+            case 0: return "digitalSignature";
+            case 1: return "nonRepudiation";
+            case 2: return "keyEncipherment";
+            case 3: return "dataEncipherment";
+            case 4: return "keyAgreement";
+            case 5: return "keyCertSign";
+            case 6: return "cRLSign";
+            case 7: return "encipherOnly";
+            case 9: return "decipherOnly";
+            default: return null;
         }
 
     }
@@ -156,9 +155,9 @@ public class ProxyVomsInfoTester {
         for (int c = is.read(); c > 0 && c != '\n'; c = is.read()) {
             sb.append((char) c);
         }
-        if (sb.length() > 0) {
+        if (sb.length() > 0)
             return new String(sb);
-        }
+
         return null;
     }
 

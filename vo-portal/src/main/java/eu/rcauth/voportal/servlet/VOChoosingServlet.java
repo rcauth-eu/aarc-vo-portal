@@ -43,11 +43,10 @@ public class VOChoosingServlet extends HttpServlet {
             }
         });
 
-        if (vomses != null) {
-            logger.log(Level.INFO,  vomses.length + " vomses discovered");
-        } else {
+        if (vomses != null)
+            logger.log(Level.INFO, vomses.length + " vomses discovered");
+        else
             logger.log(Level.SEVERE, "Failed to load VOMS information!");
-        }
     }
 
     /*

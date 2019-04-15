@@ -3,6 +3,8 @@ package eu.rcauth.voportal.client.oauth2.servlet;
 import edu.uiuc.ncsa.myproxy.oa4mp.client.OA4MPResponse;
 import edu.uiuc.ncsa.myproxy.oa4mp.client.servlet.ClientServlet;
 import edu.uiuc.ncsa.myproxy.oa4mp.client.storage.AssetStoreUtil;
+import edu.uiuc.ncsa.myproxy.oa4mp.client.storage.AssetStore;
+import edu.uiuc.ncsa.myproxy.oa4mp.client.Asset;
 import edu.uiuc.ncsa.oa4mp.oauth2.client.OA2Asset;
 import edu.uiuc.ncsa.security.core.Identifier;
 import edu.uiuc.ncsa.security.oauth_2_0.OA2Constants;
@@ -13,14 +15,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * A simple servlet that starts the request. It will make the initial request and set an identifier
- * cookie in the users browser. If there is an {@link edu.uiuc.ncsa.myproxy.oa4mp.client.storage.AssetStore} configured, it will make
- * an entry for the {@link edu.uiuc.ncsa.myproxy.oa4mp.client.Asset} resulting from this delegation.
+ * A simple servlet that starts the request. It will make the initial request
+ * and set an identifier cookie in the users browser. If there is an {@link
+ * AssetStore} configured, it will make an entry for the {@link Asset} resulting
+ * from this delegation.
  * <br><br>
  * This example is intended to show control flow rather than be a polished application.
  * Feel free to boilerplate from it as needed. Do not deploy this in production environments.
  * <p>Created by Jeff Gaynor<br>
  * on 2/10/12 at  10:24 AM
+ * Adapted by Tamás Balogh
  */
 public class VPOA2StartRequest extends ClientServlet {
     @Override

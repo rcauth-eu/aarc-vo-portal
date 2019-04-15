@@ -17,18 +17,17 @@ public class VomsProxyInfoServlet extends HttpServlet {
     public static final String VOMS_INFO_PAGE = "/pages/vomsinfo.jsp";
 
     public static final String REQ_USERNAME = "username";
-    
+
     public static final String PROXY_DIR = "/tmp";
-    
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String username = request.getParameter(REQ_USERNAME);
-        
-        if (username == null || username.isEmpty()) {
+
+        if (username == null || username.isEmpty())
             throw new ServletException("No username specified!");
-        }
-        
+
         String vomsinfo = null;
         try {
             vomsinfo = VPVomsProxyInfo.exec(PROXY_DIR + "/" + username + ".proxy");
@@ -37,15 +36,15 @@ public class VomsProxyInfoServlet extends HttpServlet {
             e.printStackTrace();
             throw new ServletException("Unable to get voms-info! \nPartial info: " + vomsinfo,e);
         }
-        
+
         //read proxy certificate from expected file location
         FileInputStream fis = new FileInputStream(PROXY_DIR + "/" + username + ".proxy");
         BufferedInputStream bis = new BufferedInputStream(fis);
-        
+
         byte[] proxy = new byte[bis.available()];
         bis.read(proxy);
         fis.close();
-        
+
         String proxyString = new String(proxy);
 
         request.setAttribute("vomsinfo", vomsinfo);

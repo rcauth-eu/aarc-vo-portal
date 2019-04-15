@@ -60,19 +60,16 @@ public class VPOA2ReadyServlet extends ClientServlet {
         OA2Asset asset = null;
         if (identifier == null) {
             asset = (OA2Asset) getCE().getAssetStore().getByToken(BasicIdentifier.newID(token));
-            if (asset != null) {
+            if (asset != null)
                 identifier = asset.getIdentifierString();
-            }
         }
         AssetResponse assetResponse = null;
         OA2MPProxyService oa2MPService = (OA2MPProxyService) getOA4MPService();
 
         UserInfo ui = null;
         if (identifier == null) {
-            
             debug("No cookie found! Cannot identify session!");
             throw new GeneralException("Unable to identify session!");
-            
         } else {
             asset = (OA2Asset) getCE().getAssetStore().get(identifier);
             if(asset.getState() == null || !asset.getState().equals(state)){
@@ -83,18 +80,17 @@ public class VPOA2ReadyServlet extends ClientServlet {
             ui = oa2MPService.getUserInfo(identifier);
             assetResponse = oa2MPService.getProxy(asset, atResponse2);
         }
-        
+
         info("2.b. Done! Displaying VOMS INFO.");
 
         String username = ui.getSub().replaceAll("/", "X");
         String tmpProxy = PROXY_TMP_DIR + "/" + username + ".proxy";
         String proxyString = null;
 
-        if ( assetResponse.getCredential() instanceof MyX509Proxy ) {
+        if ( assetResponse.getCredential() instanceof MyX509Proxy )
             proxyString = ((MyX509Proxy)assetResponse.getCredential()).getX509ProxyPEM();
-        } else {
+        else
             proxyString = assetResponse.getCredential().getX509CertificatesPEM();
-        }
 
         String vomsinfo = null;
 
@@ -107,7 +103,7 @@ public class VPOA2ReadyServlet extends ClientServlet {
         }
         catch (Exception e) {
             throw new GeneralException("Unable to execute voms-proxy-info on the returned chain!",e);
-        }        
+        }
 
         request.setAttribute("vomsinfo", vomsinfo);
         request.setAttribute("proxy", proxyString);
@@ -120,8 +116,8 @@ public class VPOA2ReadyServlet extends ClientServlet {
             contextPath = contextPath + "/";
         }
         info("2.a. Completely finished with delegation.");
-        JSPUtil.fwd(request, response, VOMS_INFO_PAGE);       
-        
+        JSPUtil.fwd(request, response, VOMS_INFO_PAGE);
+
     }
 
 }

@@ -9,5 +9,5 @@ public class VPBufferedMessageLogger extends MessageLogger {
     public VPBufferedMessageLogger(PrintStream out,PrintStream err) {
         super(out, err, DEFAULT, MessageLevel.INFO);
     }
-	
+
 }
