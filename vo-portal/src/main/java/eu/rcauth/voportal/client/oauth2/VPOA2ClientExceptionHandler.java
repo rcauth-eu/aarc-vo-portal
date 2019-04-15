@@ -1,16 +1,20 @@
 package eu.rcauth.voportal.client.oauth2;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.util.StringTokenizer;
+import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import javax.servlet.ServletException;
 
 import edu.uiuc.ncsa.myproxy.oa4mp.client.servlet.ClientServlet;
 import edu.uiuc.ncsa.oa4mp.oauth2.client.servlet.OA2ClientExceptionHandler;
-import edu.uiuc.ncsa.security.core.exceptions.GeneralException;
+import edu.uiuc.ncsa.security.servlet.ServiceClientHTTPException;
 import edu.uiuc.ncsa.security.core.util.MyLoggingFacade;
 
+/**
+ * Exception handler for the VO portal servlets
+ */
 public class VPOA2ClientExceptionHandler extends OA2ClientExceptionHandler {
 
     MyLoggingFacade logger;
@@ -20,29 +24,16 @@ public class VPOA2ClientExceptionHandler extends OA2ClientExceptionHandler {
         this.logger = myLogger;
     }
 
+    /**
+     * handles exceptions, including a {@link ServiceClientHTTPException} which is
+     * thrown when an error is returned from the mp-server endpoint. In that
+     * case the content of the response is typically a HTML page which is parsed
+     * by {@link OA2ClientExceptionHandler#parseContent(String, HttpServletRequest)}
+     */
     @Override
-    protected void parseContent(String content, HttpServletRequest request) {
-        boolean hasValidContent = false;
-        StringTokenizer st = new StringTokenizer(content, "\n");
-        while (st.hasMoreElements()) {
-            String currentLine = st.nextToken();
-            StringTokenizer clST = new StringTokenizer(currentLine, "=");
-            if (!clST.hasMoreTokens() || clST.countTokens() != 2)
-                continue;
-
-            try {
-                request.setAttribute(clST.nextToken(), URLDecoder.decode(clST.nextToken(), "UTF-8").replaceAll("\n", ""));
-            } catch (UnsupportedEncodingException xx) {
-                // ok, try it without decoding it. (This case should never really happen)
-                request.setAttribute(clST.nextToken(), clST.nextToken());
-            }
-            hasValidContent = true;
-        }
-
-        if (!hasValidContent) {
-            logger.warn("Body or error was not parseable");
-            throw new GeneralException();
-        }
+    public void handleException(Throwable t, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        logger.warn("Handling exception: " + t.getMessage());
+        super.handleException(t, request, response);
     }
 
 }
