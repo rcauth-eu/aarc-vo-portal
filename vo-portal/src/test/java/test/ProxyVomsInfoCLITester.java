@@ -1,9 +1,5 @@
 package test;
 
-import java.io.BufferedInputStream;
-import java.io.FileInputStream;
-
-import eu.rcauth.voportal.voms.VPBufferedMessageLogger;
 import eu.rcauth.voportal.voms.VPVomsProxyInfo;
 
 public class ProxyVomsInfoCLITester {

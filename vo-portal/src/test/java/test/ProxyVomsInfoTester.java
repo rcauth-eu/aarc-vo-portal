@@ -21,7 +21,7 @@ public class ProxyVomsInfoTester {
 
     public static void main(String[] args) {
 
-        String username="";
+//        String username="";
         String PROXY_DIR="/tmp";
 
         try {
@@ -29,7 +29,7 @@ public class ProxyVomsInfoTester {
             //FileInputStream fis = new FileInputStream(PROXY_DIR + "/proxy");
             BufferedInputStream bis = new BufferedInputStream(fis);
 
-            ArrayList<X509Certificate> certChain = new ArrayList<X509Certificate>();
+            ArrayList<X509Certificate> certChain = new ArrayList<>();
 
             CertificateFactory certFactory = CertificateFactory.getInstance("X.509");
 
@@ -40,7 +40,7 @@ public class ProxyVomsInfoTester {
 
             //skipping the private key
             String line = readLine(bis);
-            while (! line.equals("-----END RSA PRIVATE KEY-----")) {
+            while (line!=null && ! line.equals("-----END RSA PRIVATE KEY-----")) {
                 line = readLine(bis);
             }
 
@@ -55,7 +55,7 @@ public class ProxyVomsInfoTester {
             VOMSACValidator validator = VOMSValidators.newValidator();
 
             //convert certificate chain and validate
-            X509Certificate[] chain =  certChain.toArray(new X509Certificate[certChain.size()]);
+            X509Certificate[] chain =  certChain.toArray(new X509Certificate[0]);
             List<VOMSValidationResult> results =  validator.validateWithResult(chain);
 
             //collect printable data

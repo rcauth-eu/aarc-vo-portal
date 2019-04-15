@@ -34,7 +34,7 @@ public class VomsProxyInfoServlet extends HttpServlet {
         }
         catch (Exception e) {
             e.printStackTrace();
-            throw new ServletException("Unable to get voms-info! \nPartial info: " + vomsinfo,e);
+            throw new ServletException("Unable to get voms-info! \n" , e);
         }
 
         //read proxy certificate from expected file location
@@ -42,6 +42,7 @@ public class VomsProxyInfoServlet extends HttpServlet {
         BufferedInputStream bis = new BufferedInputStream(fis);
 
         byte[] proxy = new byte[bis.available()];
+        // TODO note that we ignore the return values here
         bis.read(proxy);
         fis.close();
 
