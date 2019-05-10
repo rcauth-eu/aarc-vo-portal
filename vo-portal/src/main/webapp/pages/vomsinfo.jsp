@@ -30,19 +30,24 @@
 
     <h1>You now possess the following proxy</h1>
 
-    <br><br>
+    <p>
+
+    Username:
+    <pre>${username}</pre>
+
+    <p>
 
     The results of voms-proxy-info -all:
 
-    <br>
+    <p>
 
     <pre>${vomsinfo}</pre>
 
-    <br><br>
+    <p>
 
     Your proxy certificate:
 
-    <br>
+    <p>
 
     <ul>
         <li><a href="javascript:unhide('showCert');">Show/Hide Proxy</a></li>
@@ -52,6 +57,16 @@
         </div>
     </ul>
 
+    <p>
+
+    User information:
+    <p>
+    <ul>
+        <li><a href="javascript:unhide('showUI');">Show/Hide user information</a>
+        <div id="showUI" class="hidden">
+            <pre>${userinfo}</pre>
+        </div>
+    </ul>
 
 </body>
 </html>

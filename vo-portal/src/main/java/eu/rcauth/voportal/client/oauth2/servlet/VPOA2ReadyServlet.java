@@ -20,10 +20,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import eu.rcauth.voportal.voms.VPVomsProxyInfo;
+import org.apache.commons.codec.binary.Hex;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.net.URI;
+import java.nio.charset.Charset;
+import java.security.MessageDigest;
 
 public class VPOA2ReadyServlet extends ClientServlet {
 
@@ -66,25 +69,24 @@ public class VPOA2ReadyServlet extends ClientServlet {
         AssetResponse assetResponse = null;
         OA2MPProxyService oa2MPService = (OA2MPProxyService) getOA4MPService();
 
-        UserInfo ui = null;
         if (identifier == null) {
             debug("No cookie found! Cannot identify session!");
             throw new GeneralException("Unable to identify session!");
-        } else {
-            asset = (OA2Asset) getCE().getAssetStore().get(identifier);
-            if(asset.getState() == null || !asset.getState().equals(state)){
-                warn("The expected state from the server was \"" + asset.getState() + "\", but instead \"" + state + "\" was returned. Transaction aborted.");
-                throw new IllegalArgumentException("Error: The state returned by the server is invalid.");
-            }
-            ATResponse2 atResponse2 = oa2MPService.getAccessToken(asset, grant);
-            ui = oa2MPService.getUserInfo(identifier);
-            assetResponse = oa2MPService.getProxy(asset, atResponse2);
         }
+        asset = (OA2Asset) getCE().getAssetStore().get(identifier);
+        if(asset.getState() == null || !asset.getState().equals(state)){
+            warn("The expected state from the server was \"" + asset.getState() + "\", but instead \"" + state + "\" was returned. Transaction aborted.");
+            throw new IllegalArgumentException("Error: The state returned by the server is invalid.");
+        }
+        ATResponse2 atResponse2 = oa2MPService.getAccessToken(asset, grant);
+        UserInfo userinfo = oa2MPService.getUserInfo(identifier);
+        assetResponse = oa2MPService.getProxy(asset, atResponse2);
 
         info("2.b. Done! Displaying VOMS INFO.");
 
-        String username = ui.getSub().replaceAll("/", "X");
-        String tmpProxy = PROXY_TMP_DIR + "/" + username + ".proxy";
+        String username = userinfo.getSub();
+        byte[] hash = MessageDigest.getInstance("SHA-256").digest( username.getBytes(Charset.forName("UTF-8")) );
+        String tmpProxy = PROXY_TMP_DIR + "/" + Hex.encodeHexString(hash) + ".proxy";
         String proxyString = null;
 
         if ( assetResponse.getCredential() instanceof MyX509Proxy )
@@ -100,13 +102,22 @@ public class VPOA2ReadyServlet extends ClientServlet {
             fOut.close();
 
             vomsinfo = VPVomsProxyInfo.exec(tmpProxy);
+
+            File file = new File(tmpProxy);
+            if (file.delete()) {
+                info("proxy " + tmpProxy + " succesfully deleted.");
+            } else {
+                warn( "proxy " + tmpProxy + " could not be deleted");
+            }
         }
         catch (Exception e) {
             throw new GeneralException("Unable to execute voms-proxy-info on the returned chain!",e);
         }
 
+        request.setAttribute("username", username);
         request.setAttribute("vomsinfo", vomsinfo);
         request.setAttribute("proxy", proxyString);
+        request.setAttribute("userinfo", userinfo.toJSon().toString(3));
 
         // Fix in cases where the server request passes through Apache before going to Tomcat.
 
