@@ -119,6 +119,8 @@ public class VPOA2ReadyServlet extends ClientServlet {
         request.setAttribute("proxy", proxyString);
         request.setAttribute("userinfo", userinfo.toJSon().toString(3));
 
+        request.setAttribute("start", getServletConfig().getServletContext().getContextPath());
+
         // Fix in cases where the server request passes through Apache before going to Tomcat.
 
         String contextPath = request.getContextPath();

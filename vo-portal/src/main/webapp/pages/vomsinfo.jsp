@@ -51,11 +51,11 @@
 
     <ul>
         <li><a href="javascript:unhide('showCert');">Show/Hide Proxy</a></li>
-        <div id="showCert" class="hidden">
-            <p>
-            <pre>${proxy}</pre>
-        </div>
     </ul>
+    <div id="showCert" class="hidden">
+        <p>
+        <pre>${proxy}</pre>
+    </div>
 
     <p>
 
@@ -63,10 +63,16 @@
     <p>
     <ul>
         <li><a href="javascript:unhide('showUI');">Show/Hide user information</a>
-        <div id="showUI" class="hidden">
-            <pre>${userinfo}</pre>
-        </div>
     </ul>
+    <div id="showUI" class="hidden">
+        <pre>${userinfo}</pre>
+    </div>
+    <p>
+    <hr>
+    <p>
+    <form name="input" action="${start}" method="get"/>
+    <input type="submit" value="Return to client"/>
+    </form>
 
 </body>
 </html>
