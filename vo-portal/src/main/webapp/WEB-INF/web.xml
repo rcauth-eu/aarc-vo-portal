@@ -114,8 +114,8 @@
 
     <!-- Configure the location of vomsdir on the local filesystem -->
     <context-param>
-        <param-name>eu.rcauth.voportal.vomsdir</param-name>
-        <param-value>/etc/grid-security/vomsdir</param-value>
+        <param-name>eu.rcauth.voportal.vomses</param-name>
+        <param-value>/etc/vomses</param-value>
     </context-param>
 
 </web-app>
