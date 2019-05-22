@@ -25,7 +25,7 @@ public class VOChoosingServlet extends HttpServlet {
     String[] vomses = null;
 
     /*
-     * Load available VOMSse in memory on startup
+     * Load available VOMSes in memory on startup
      */
     @Override
     public void init(ServletConfig config) throws ServletException {
@@ -43,7 +43,7 @@ public class VOChoosingServlet extends HttpServlet {
             }
         });
 
-        if (vomses != null)
+        if (vomses != null && vomses.length>0)
             logger.log(Level.INFO, vomses.length + " vomses discovered");
         else
             logger.log(Level.SEVERE, "Failed to load VOMS information!");
