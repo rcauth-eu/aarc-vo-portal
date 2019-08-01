@@ -1,7 +1,6 @@
 package eu.rcauth.voportal.servlet;
 
 import org.italiangrid.voms.VOMSError;
-import org.italiangrid.voms.request.VOMSESLookupStrategy;
 import org.italiangrid.voms.request.VOMSESParser;
 import org.italiangrid.voms.request.VOMSESParserFactory;
 import org.italiangrid.voms.request.VOMSServerInfo;
