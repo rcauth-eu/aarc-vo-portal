@@ -63,7 +63,8 @@ public class ProxyVomsInfoTester {
             System.out.println("issuer     : " + proxycert.getIssuerDN() );
             System.out.println("identity   : " + chain[chain.length-1].getSubjectDN() );
 
-            //System.out.println("type       : " +  "TODO");
+            // Note: parsing the proxy for the right type is a lot (too much) work for this test tool
+            //System.out.println("type       : " + "");
 
             RSAPublicKey pub = (RSAPublicKey) proxycert.getPublicKey();
             System.out.println("strength   : " + pub.getModulus().bitLength() );
