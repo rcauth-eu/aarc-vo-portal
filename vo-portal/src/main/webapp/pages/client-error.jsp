@@ -11,8 +11,6 @@
 <body>
 <H2>There was a problem getting a proxy</H2>
 
-The message received was: <br>
-
 <c:if test="${not empty message}"><B>Message:</B>
 <pre>${message}</pre>
 <br></c:if><c:if test="${not empty cause}">
