@@ -6,7 +6,6 @@ import edu.uiuc.ncsa.myproxy.oa4mp.client.servlet.ClientServlet;
 import edu.uiuc.ncsa.oa4mp.oauth2.client.OA2Asset;
 import edu.uiuc.ncsa.oa4mp.oauth2.client.OA2MPProxyService;
 import edu.uiuc.ncsa.security.core.exceptions.GeneralException;
-import edu.uiuc.ncsa.security.core.util.BasicIdentifier;
 import edu.uiuc.ncsa.security.delegation.token.AuthorizationGrant;
 import edu.uiuc.ncsa.security.delegation.token.MyX509Proxy;
 import edu.uiuc.ncsa.security.delegation.token.impl.AuthorizationGrantImpl;
@@ -44,43 +43,33 @@ public class VPOA2ReadyServlet extends ClientServlet {
         // (so it is the portal that actually is invoking this method after the authorization
         // step.) The token and verifier are peeled off and used
         // to complete the request.
-        info("2.a. Getting token and verifier.");
+        info("2.a. Getting token and state.");
         String token = request.getParameter(CONST(ClientEnvironment.TOKEN));
         String state = request.getParameter(OA2Constants.STATE);
-        // TODO MISCHA: test vs. warn() message?!
         if (token == null) {
             warn("2.a. The token is null.");
-            GeneralException ge = new GeneralException("Error: This servlet requires parameters for the token and possibly verifier.");
-            request.setAttribute("exception", ge);
-            JSPUtil.fwd(request, response, getCE().getErrorPagePath());
-            return;
+            throw new IllegalArgumentException("Error: Missing token parameter ("+ClientEnvironment.TOKEN+").");
         }
-        info("2.a Token found.");
-
+        info("2.a Token found, getting grant.");
+        // Create grant from the token (don't need token afterwards)
         AuthorizationGrant grant = new AuthorizationGrantImpl(URI.create(token));
+
         info("2.a. Getting the cert(s) from the service");
         String identifier = clearCookie(request, response);
-        OA2Asset asset = null;
         if (identifier == null) {
-            asset = (OA2Asset) getCE().getAssetStore().getByToken(BasicIdentifier.newID(token));
-            if (asset != null)
-                identifier = asset.getIdentifierString();
+            info("No cookie found! Cannot identify session!");
+            throw new GeneralException("Missing cookie, unable to identify session!");
         }
-        AssetResponse assetResponse = null;
-        OA2MPProxyService oa2MPService = (OA2MPProxyService) getOA4MPService();
-
-        if (identifier == null) {
-            debug("No cookie found! Cannot identify session!");
-            throw new GeneralException("Unable to identify session!");
-        }
-        asset = (OA2Asset) getCE().getAssetStore().get(identifier);
+        OA2Asset asset = (OA2Asset) getCE().getAssetStore().get(identifier);
         if(asset.getState() == null || !asset.getState().equals(state)){
             warn("The expected state from the server was \"" + asset.getState() + "\", but instead \"" + state + "\" was returned. Transaction aborted.");
             throw new IllegalArgumentException("Error: The state returned by the server is invalid.");
         }
+
+        OA2MPProxyService oa2MPService = (OA2MPProxyService) getOA4MPService();
         ATResponse2 atResponse2 = oa2MPService.getAccessToken(asset, grant);
         UserInfo userinfo = oa2MPService.getUserInfo(identifier);
-        assetResponse = oa2MPService.getProxy(asset, atResponse2);
+        AssetResponse assetResponse = oa2MPService.getProxy(asset, atResponse2);
 
         info("2.b. Done! Displaying VOMS INFO.");
 
@@ -105,7 +94,7 @@ public class VPOA2ReadyServlet extends ClientServlet {
 
             File file = new File(tmpProxy);
             if (file.delete()) {
-                info("proxy " + tmpProxy + " succesfully deleted.");
+                info("proxy " + tmpProxy + " successfully deleted.");
             } else {
                 warn( "proxy " + tmpProxy + " could not be deleted");
             }
@@ -119,15 +108,16 @@ public class VPOA2ReadyServlet extends ClientServlet {
         request.setAttribute("proxy", proxyString);
         request.setAttribute("userinfo", userinfo.toJSon().toString(3));
 
-        request.setAttribute("start", getServletConfig().getServletContext().getContextPath());
+        String start = getServletConfig().getServletContext().getContextPath();
+        // Fix "start" in cases where the server request passes through Apache
+        // before going to Tomcat since Apache would redirect from X to X/
+        // NOTE: ideally we should also change the contextpath for the current
+        // request, however we cannot change that )-:
+        if (start.endsWith("/"))
+            request.setAttribute("start", start);
+        else
+            request.setAttribute("start", start + "/");
 
-        // Fix in cases where the server request passes through Apache before going to Tomcat.
-
-        String contextPath = request.getContextPath();
-        if (!contextPath.endsWith("/")) {
-            // TODO Doesn't work since we don't change the actual parameter
-            contextPath = contextPath + "/";
-        }
         info("2.a. Completely finished with delegation.");
         JSPUtil.fwd(request, response, VOMS_INFO_PAGE);
 
