@@ -96,7 +96,7 @@ public class VPOA2ReadyServlet extends ClientServlet {
             if (file.delete()) {
                 info("proxy " + tmpProxy + " successfully deleted.");
             } else {
-                warn( "proxy " + tmpProxy + " could not be deleted");
+                warn("proxy " + tmpProxy + " could not be deleted.");
             }
         }
         catch (Exception e) {
