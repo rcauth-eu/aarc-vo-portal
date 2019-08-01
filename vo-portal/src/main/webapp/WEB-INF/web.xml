@@ -8,6 +8,17 @@
     <display-name>VO Portal OAuth 2 for MyProxy Client</display-name>
     <!--what gets put in the browser's title bar -->
 
+    <!-- Simple servlet for printing information about proxy -->
+    <!--servlet>
+        <servlet-name>VPI</servlet-name>
+        <servlet-class>eu.rcauth.voportal.servlet.VomsProxyInfoServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>VPI</servlet-name>
+        <url-pattern>/vpi</url-pattern>
+    </servlet-mapping-->
 
     <!-- Simple VO Choosing servlet -->
     <servlet>
