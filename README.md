@@ -20,7 +20,7 @@ servlet inside the same tomcat container as the Master Portal itself.
    Make sure to use the _same_ version (branch or tag) for both the
    security-lib and OA4MP components.  
    For the **0.2.0** series of the aarc-vo-portal, you must use the
-   **rcauth-4.2** versions.
+   **4.2-RCauth** versions.
    
 2. Checkout the right version of the aarc-vo-portal.
 

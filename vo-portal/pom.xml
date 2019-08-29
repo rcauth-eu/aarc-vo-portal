@@ -32,7 +32,7 @@
 
     <properties>
         <revision>0.2.0-SNAPSHOT</revision>
-        <oa4mpVersion>4.2-RCauth</oa4mpVersion>
+        <oa4mpVersion>4.2-RCauth-SNAPSHOT</oa4mpVersion>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
