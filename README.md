@@ -42,7 +42,7 @@ servlet inside the same tomcat container as the Master Portal itself.
 ## Other Resources
 
 Background information:
-* [AARC Pilot RCauth/MasterPortal information](https://wiki.nikhef.nl/grid/AARC_Pilot)
+* [RCauth.eu and MasterPortal documentation](https://wiki.nikhef.nl/grid/RCauth.eu_and_MasterPortal_documentation)
 * [Ansible scripts for the Master Portal](https://github.com/rcauth-eu/aarc-ansible-master-portal)
 
 Related Components:
