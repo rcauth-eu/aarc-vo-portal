@@ -76,8 +76,12 @@ public class VOChoosingServlet extends HttpServlet {
                 List<VOMSServerInfo> infoList = vomsesParser.parse(vomsesFile);
                 for (VOMSServerInfo vomsServerInfo: infoList) {
                     String vo = vomsServerInfo.getVoName();
-                    logger.info("Adding VO " + vo);
-                    vos.add(vo);
+                    if (vos.contains(vo)) {
+                        logger.info("Skipping duplicate VO " + vo);
+                    } else {
+                        logger.info("Adding VO " + vo);
+                        vos.add(vo);
+                    }
                 }
             } catch (VOMSError e) {
                 logger.severe("Failed to parse "+vomsesFile.toString()+": "+e.getMessage());
@@ -87,6 +91,8 @@ public class VOChoosingServlet extends HttpServlet {
                     logger.warning(t.getClass().getSimpleName()+": "+t.getMessage());
             }
         }
+        // Sort the VOs in alphabetical order
+        vos.sort(String.CASE_INSENSITIVE_ORDER);
         return vos.toArray(new String[0]);
     }
 }
