@@ -19,7 +19,7 @@ servlet inside the same tomcat container as the Master Portal itself.
    
    Make sure to use the _same_ version (branch or tag) for both the
    security-lib and OA4MP components.  
-   For the **0.2.0** series of the aarc-vo-portal, you must use the
+   For the **0.2** series of the aarc-vo-portal, you must use the
    **4.2-RCauth** versions.
    
 2. Checkout the right version of the aarc-vo-portal.
@@ -27,7 +27,7 @@ servlet inside the same tomcat container as the Master Portal itself.
         git clone https://github.com/rcauth-eu/aarc-vo-portal
         cd aarc-vo-portal
 
-        git checkout v0.2.0
+        git checkout v0.2.1
         cd vo-portal
 
 3. Build the vo-portal's war file
