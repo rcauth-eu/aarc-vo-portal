@@ -27,7 +27,7 @@ servlet inside the same tomcat container as the Master Portal itself.
         git clone https://github.com/rcauth-eu/aarc-vo-portal
         cd aarc-vo-portal
 
-        git checkout v0.2.1
+        git checkout v0.2.2
         cd vo-portal
 
 3. Build the vo-portal's war file
